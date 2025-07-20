@@ -10,7 +10,11 @@ export function AuthProvider({ children }) {
 
   // TODO: signup - done
   async function signup(username) {
+
     setError(null);
+
+    
+    // op1: try-catch (?) ; op2: fetch (just following DQ's example), but needs further implementation on preventing/catching errors...
 
     try {
       const response = await fetch(`${API}/signup`, {
@@ -24,14 +28,12 @@ export function AuthProvider({ children }) {
       if (!data.success) throw new Error(data.message);
 
       setToken(data.token);
-      sessionStorage.setItem("token", data.token);
+      // sessionStorage.setItem("token", data.token);
       setLocation("TABLET");
 
-
-    } catch (e) {
-      setError(err.message);
+    } catch (err) {
+      console.error("Signup failed:", err);
     }
-
     
   }
 
@@ -40,8 +42,7 @@ async function authenticate() {
   setError(null);
 
   if(!token){
-    setError("No token available.");
-    throw new Error("No token available.");
+    throw new Error("No token found. Please sign up first.");
   }
 
   try {
@@ -60,15 +61,17 @@ async function authenticate() {
     setLocation("TUNNEL");
 
 
-  } catch (e) {
-    setError(e.message);
+  } catch (err) {
+    console.error("Authentication failed", err);
 
   }
 
  }
 
 
-  const value = { location };
+  const value = { location, signup, authenticate };
+
+  
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
