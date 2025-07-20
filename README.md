@@ -37,3 +37,58 @@ If you finish early, try working on the following extensions:
 ## Submission
 
 Please submit the link to your public GitHub repository.
+
+
+## LN:
+recap/refresh and differentiate different cases--
+
+1. `JSON.stringify()`
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
+
+https://www.w3schools.com/js/js_json_stringify.asp
+
+
+The **`JSON.stringify()`** static method converts a JavaScript value to a JSON string, optionally replacing values if a replacer function is specified or optionally including only the specified properties if a replacer array is specified.
+
+a. When sending data ==to== a web server, the data has to be a *==string*==.
+b. You can convert *==any* JavaScript datatype== into a string with `JSON.stringify()`.
+
+
+
+
+
+
+2. fetch
+https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+Note on HTTP error: (Em: probably covered in class but I don't remember, jogging down notes here for easy access)
+The `fetch()` function will reject the promise on some errors, but ***not*** if the server responds with an error status like [`404`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/404): so we also check the response status and throw if it is not OK.
+
+Otherwise, we fetch the response body content as [JSON](https://developer.mozilla.org/en-US/docs/Glossary/JSON) by calling the [`json()`](https://developer.mozilla.org/en-US/docs/Web/API/Response/json "json()") method of `Response`, and log one of its values. Note that like `fetch()` itself, `json()` is asynchronous, as are all the other methods to access the response body content.
+
+
+
+
+
+
+
+3. console.error() vs. throw new error
+https://stackoverflow.com/questions/25377115/what-is-the-difference-between-throw-error-and-console-error
+
+Some of the Differences are:
+
+**throw Error("msg"):**
+
+1. Stops js execution.
+2. Mostly used for code handling purpose.
+3. Can alter main flow of execution.
+4. This syntax is mostly same for all browser as this is specified and validated by **W3C**.
+
+**console.error("msg"):**
+
+1. It just shows output in Red color at Browser console
+2. It is mostly used to print values for debugging purpose.
+3. Cannot harm main flow of execution.
+4. This Syntax sometimes vary according to vendor browser and not standardized by **W3C**.
+
+
+
