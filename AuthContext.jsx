@@ -4,17 +4,21 @@ const API = "https://fsa-jwt-practice.herokuapp.com";
 
 const AuthContext = createContext();
 
+
 export function AuthProvider({ children }) {
   const [token, setToken] = useState();
   const [location, setLocation] = useState("GATE");
+  const [error, setError] = useState(null);
 
   // TODO: signup - done
   async function signup(username) {
 
-    setError(null);
 
+
+    setError(null);
+    console.log("Calling signup with:", username); 
     
-    // op1: try-catch (?) ; op2: fetch (just following DQ's example), but needs further implementation on preventing/catching errors...
+    // op1: try-catch (?) ; op2: fetch (just following DQ's example), but needs further implementation on preventing/catching errors (see OB WS note and LN)...
 
     try {
       const response = await fetch(`${API}/signup`, {
@@ -24,11 +28,13 @@ export function AuthProvider({ children }) {
       });
 
       const data = await response.json();
+      console.log("Signup response:", data);
 
       if (!data.success) throw new Error(data.message);
 
       setToken(data.token);
       // sessionStorage.setItem("token", data.token);
+
       setLocation("TABLET");
 
     } catch (err) {
@@ -50,11 +56,13 @@ async function authenticate() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        "Authorization": `Bearer ${token}`,
       },
     });
   
     const data = await response.json();
+    console.log("Authentication response:", data);
+
 
     if (!data.success) throw new Error(data.message);
 
@@ -71,7 +79,7 @@ async function authenticate() {
 
   const value = { location, signup, authenticate };
 
-  
+
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 

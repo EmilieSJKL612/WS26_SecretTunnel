@@ -13,7 +13,7 @@ export default function Entrance() {
   function handleSubmit(event) {
 
     event.preventDefault();
-    
+    console.log("Submitting name:", name);
     signup(name);
     
   }
